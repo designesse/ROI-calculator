@@ -5,11 +5,13 @@
     <title>ROI Calculator</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
           integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link href="//fonts.googleapis.com/css?family=Titillium+Web:400normal" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css"/>
 </head>
 <body ng-app="ROICalculator" ng-controller="ROIController">
 
 <h1>ROI Calculator</h1>
-<table>
+<table class="table">
     <tr>
         <th></th>
         <th>One-Time</th>
@@ -21,15 +23,15 @@
         <td>{{ item.oneTime | currency:"$":2 }}</td>
         <td>{{ item.monthly | currency:"$":2 }}</td>
         <td>
-            <button class="btn btn-danger glyphicon glyphicon-trash" ng-click="deleteRevenue(item)"></button>
+            <button class="btn btn-xs btn-danger glyphicon glyphicon-trash" ng-click="deleteRevenue(item)"></button>
         </td>
     </tr>
     <tr>
-        <td><input placeholder="Revenue item" ng-model="newRevenue.name"/></td>
-        <td><input placeholder="One time amount" ng-model="newRevenue.oneTime"/></td>
-        <td><input placeholder="Monthly amount" ng-model="newRevenue.monthly"/></td>
+        <td><input ng-class="{'error': errorRevenueName}" placeholder="Revenue item" ng-model="newRevenue.name"/></td>
+        <td><input ng-class="{'error': errorRevenueOneTime}" placeholder="One-time amount" ng-model="newRevenue.oneTime"/></td>
+        <td><input ng-class="{'error': errorRevenueMonthly}" class="input-error" placeholder="Monthly amount" ng-model="newRevenue.monthly"/></td>
         <td>
-            <button class="btn btn-primary glyphicon glyphicon-plus" ng-click="addRevenue(newRevenue)"></button>
+            <button class="btn btn-xs btn-primary glyphicon glyphicon-plus" ng-click="addRevenue(newRevenue)"></button>
         </td>
     </tr>
     <tr ng-repeat="item in expenseItems | orderBy: 'name'">
@@ -37,15 +39,15 @@
         <td>{{ item.oneTime | currency:"$":2 }}</td>
         <td>{{ item.monthly | currency:"$":2 }}</td>
         <td>
-            <button class="btn btn-danger glyphicon glyphicon-trash" ng-click="deleteExpense(item)"></button>
+            <button class="btn btn-xs btn-danger glyphicon glyphicon-trash" ng-click="deleteExpense(item)"></button>
         </td>
     </tr>
     <tr>
-        <td><input placeholder="Expense item" ng-model="newExpense.name"/></td>
-        <td><input placeholder="One time amount" ng-model="newExpense.oneTime"/></td>
-        <td><input placeholder="Monthly amount" ng-model="newExpense.monthly"/></td>
+        <td><input ng-class="{'error': errorExpenseName}" placeholder="Expense item" ng-model="newExpense.name"/></td>
+        <td><input ng-class="{'error': errorExpenseOneTime}" placeholder="One-time amount" ng-model="newExpense.oneTime"/></td>
+        <td><input ng-class="{'error': errorExpenseMonthly}" placeholder="Monthly amount" ng-model="newExpense.monthly"/></td>
         <td>
-            <button class="btn btn-primary glyphicon glyphicon-plus" ng-click="addExpense(newExpense)"></button>
+            <button class="btn btn-xs btn-primary glyphicon glyphicon-plus" ng-click="addExpense(newExpense)"></button>
         </td>
     </tr>
     <tr>
@@ -55,13 +57,13 @@
         <th>Total</th>
     </tr>
     <tr>
-        <td>Revenue</td>
+        <th>Revenue</th>
         <td ng-bind="totalRevenueOneTime | currency:'$':2 "></td>
         <td ng-bind="totalRevenueMonthly | currency:'$':2 "></td>
         <td ng-bind="totalRevenueTotal | currency:'$':2 "></td>
     </tr>
     <tr>
-        <td>Expenses</td>
+        <th>Expenses</th>
         <td ng-bind="totalExpenseOneTime | currency:'$':2 "></td>
         <td ng-bind="totalExpenseMonthly | currency:'$':2 "></td>
         <td ng-bind="totalExpenseTotal | currency:'$':2 "></td>
@@ -69,23 +71,24 @@
     <tr></tr>
     <tr>
         <td></td>
-        <td>Contribution profit</td>
+        <th>Contribution profit</th>
         <td ng-bind="totalMonthlyProfit | currency:'$':2 "></td>
         <td ng-bind="totalProfit | currency:'$':2 ">0</td>
     </tr>
     <tr>
         <td></td>
-        <td>Contribution margin</td>
+        <th>Contribution margin</th>
         <td></td>
         <td ng-bind="contributionMargin | percentage:2"></td>
     </tr>
     <tr>
         <td></td>
-        <td>Capital ROI (Months)</td>
+        <th>Capital ROI (Months)</th>
         <td></td>
         <td ng-bind="capitalROI | number:1"></td>
     </tr>
 </table>
+</div>
 </body>
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>

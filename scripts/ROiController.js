@@ -8,7 +8,22 @@ angular
         $scope.newExpense = {};
 
         $scope.addRevenue = function (newRevenue) {
-            if (!isNaN(newRevenue.oneTime) && !isNaN(newRevenue.monthly)) {
+            $scope.errorRevenueName = false;
+            $scope.errorRevenueOneTime = false;
+            $scope.errorRevenueMonthly = false;
+            if (newRevenue.name == null) {
+                $scope.errorRevenueName = true;
+            }
+
+            if (!newRevenue.oneTime || isNaN(newRevenue.oneTime)) {
+                $scope.errorRevenueOneTime = true;
+            }
+
+            if (!newRevenue.monthly || isNaN(newRevenue.monthly)) {
+                $scope.errorRevenueMonthly = true;
+            }
+
+            if (newRevenue && !isNaN(newRevenue.oneTime) && !isNaN(newRevenue.monthly)) {
                 newRevenue.oneTime = Number(newRevenue.oneTime);
                 newRevenue.monthly = Number(newRevenue.monthly);
                 $scope.revenueItems.push(newRevenue);
@@ -25,7 +40,22 @@ angular
         };
 
         $scope.addExpense = function (newExpense) {
-            if (!isNaN(newExpense.oneTime) && !isNaN(newExpense.monthly)) {
+            $scope.errorExpenseName = false;
+            $scope.errorExpenseOneTime = false;
+            $scope.errorExpenseMonthly = false;
+            if (newExpense.name == null) {
+                $scope.errorExpenseName = true;
+            }
+
+            if (!newExpense.oneTime || isNaN(newExpense.oneTime)) {
+                $scope.errorExpenseOneTime = true;
+            }
+
+            if (!newExpense.monthly || isNaN(newExpense.monthly)) {
+                $scope.errorExpenseMonthly = true;
+            }
+
+            if (newExpense && !isNaN(newExpense.oneTime) && !isNaN(newExpense.monthly)) {
                 newExpense.oneTime = Number(newExpense.oneTime);
                 newExpense.monthly = Number(newExpense.monthly);
                 $scope.expenseItems.push(newExpense);
