@@ -1,0 +1,66 @@
+body {
+    background-color: #e4e4e4;
+    color: #8b94a5;
+    font-family: 'Titillium Web', Arial, Sans-Serif;
+}
+
+h1, table {
+    margin: 0 auto;
+}
+
+h1 {
+    padding: 30px;
+    text-align: center
+}
+
+table {
+    background-color: #fff;
+    border: 1px solid #d2dae1;
+}
+
+table.table {
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+tr {
+    border: 1px solid #f1f5f8;
+}
+
+h1, th {
+    color: #f15c22;
+    text-transform: capitalize;
+}
+
+th, td {
+    padding-left: 30px;
+}
+
+.error {
+    border: 2px solid red;
+}
+
+::-webkit-input-placeholder {
+    color: #bbb;
+}
+
+:-moz-placeholder {
+    /* Firefox 18- */
+    color: #bbb;
+}
+
+::-moz-placeholder {
+    /* Firefox 19+ */
+    color: #bbb;
+}
+
+:-ms-input-placeholder {
+    color: #bbb;
+}
+
+@media screen and (min-width: 700px) {
+    .table {
+        margin: 0 auto;
+        width: 600px;
+    }
+}
