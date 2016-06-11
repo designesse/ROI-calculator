@@ -2,11 +2,13 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>JS Bin</title>
+    <title>ROI Calculator</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 </head>
-<body>
+<body ng-app="ROICalculator" ng-controller="ROIController">
 
+<h1>ROI Calculator</h1>
 <table>
     <tr>
         <th></th>
@@ -14,47 +16,37 @@
         <th>Monthly</th>
         <th></th>
     </tr>
-    <tr>
-        <td>Item 1</td>
-        <td>$100.00</td>
-        <td>$50.00</td>
-        <td><button>Delete</button></td>
+    <tr ng-repeat="item in revenueItems | orderBy: 'name'">
+        <td>{{ item.name }}</td>
+        <td>{{ item.oneTime | currency:"$":2 }}</td>
+        <td>{{ item.monthly | currency:"$":2 }}</td>
+        <td>
+            <button class="btn btn-danger glyphicon glyphicon-trash" ng-click="deleteRevenue(item)"></button>
+        </td>
     </tr>
     <tr>
-        <td>Item 2</td>
-        <td>$50.00</td>
-        <td>$25.00</td>
-        <td><button>Delete</button></td>
+        <td><input placeholder="Revenue item" ng-model="newRevenue.name"/></td>
+        <td><input placeholder="One time amount" ng-model="newRevenue.oneTime"/></td>
+        <td><input placeholder="Monthly amount" ng-model="newRevenue.monthly"/></td>
+        <td>
+            <button class="btn btn-primary glyphicon glyphicon-plus" ng-click="addRevenue(newRevenue)"></button>
+        </td>
+    </tr>
+    <tr ng-repeat="item in expenseItems | orderBy: 'name'">
+        <td>{{ item.name }}</td>
+        <td>{{ item.oneTime | currency:"$":2 }}</td>
+        <td>{{ item.monthly | currency:"$":2 }}</td>
+        <td>
+            <button class="btn btn-danger glyphicon glyphicon-trash" ng-click="deleteExpense(item)"></button>
+        </td>
     </tr>
     <tr>
-        <td>Item 3</td>
-        <td>$25.00</td>
-        <td>$85.00</td>
-        <td><button>Delete</button></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td><button>Add revenue item</button></td>
-    </tr>
-    <tr>
-        <td>Expense 1</td>
-        <td>$500.00</td>
-        <td>$20.00</td>
-        <td><button>Delete</button></td>
-    </tr>
-    <tr>
-        <td>Expense 2</td>
-        <td>$200.00</td>
-        <td>$60.00</td>
-        <td><button>Delete</button></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td><button>Add expense item</button></td>
+        <td><input placeholder="Expense item" ng-model="newExpense.name"/></td>
+        <td><input placeholder="One time amount" ng-model="newExpense.oneTime"/></td>
+        <td><input placeholder="Monthly amount" ng-model="newExpense.monthly"/></td>
+        <td>
+            <button class="btn btn-primary glyphicon glyphicon-plus" ng-click="addExpense(newExpense)"></button>
+        </td>
     </tr>
     <tr>
         <th></th>
@@ -64,35 +56,44 @@
     </tr>
     <tr>
         <td>Revenue</td>
-        <td>$175.00</td>
-        <td>$160.00</td>
-        <td>$2095.00</td>
+        <td ng-bind="totalRevenueOneTime | currency:'$':2 "></td>
+        <td ng-bind="totalRevenueMonthly | currency:'$':2 "></td>
+        <td ng-bind="totalRevenueTotal | currency:'$':2 "></td>
     </tr>
     <tr>
         <td>Expenses</td>
-        <td>$700.00</td>
-        <td>$60.00</td>
-        <td>$1420.00</td>
+        <td ng-bind="totalExpenseOneTime | currency:'$':2 "></td>
+        <td ng-bind="totalExpenseMonthly | currency:'$':2 "></td>
+        <td ng-bind="totalExpenseTotal | currency:'$':2 "></td>
     </tr>
     <tr></tr>
     <tr>
         <td></td>
         <td>Contribution profit</td>
-        <td>$100.00</td>
-        <td>$675.00</td>
+        <td ng-bind="totalMonthlyProfit | currency:'$':2 "></td>
+        <td ng-bind="totalProfit | currency:'$':2 ">0</td>
     </tr>
-    <td></td>
-    <td>Contribution margin</td>
-    <td></td>
-    <td>32%</td>
+    <tr>
+        <td></td>
+        <td>Contribution margin</td>
+        <td></td>
+        <td ng-bind="contributionMargin | percentage:2"></td>
     </tr>
-    </tr>
-    <td></td>
-    <td>Capital ROI (Months)</td>
-    <td></td>
-    <td>53</td>
+    <tr>
+        <td></td>
+        <td>Capital ROI (Months)</td>
+        <td></td>
+        <td ng-bind="capitalROI | number:1"></td>
     </tr>
 </table>
-
 </body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.3/ui-bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.3/ui-bootstrap-tpls.min.js"></script>
+<script src="app.js"></script>
+<script src="scripts/ROIController.js"></script>
+<script src="scripts/revenueRepository.js"></script>
+<script src="scripts/expenseRepository.js"></script>
+<script src="scripts/percentageFilter.js"></script>
 </html>
